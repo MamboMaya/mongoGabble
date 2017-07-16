@@ -6,9 +6,10 @@
   <small>- {{username}}</small>
 </div>
 <div class="likes">
-  <span>{{likes}}</span>
+  <span>{{totalLikes}}</span>
   <form class="" action="/gabs/{{_id}}/like" method="post">
     <button type="submit" name="button">I Like Dis</button>
   </form>
+  <a href="/gabs/{{_id}}/edit">Edit</a> 
 </div>
 {{/gabs}}

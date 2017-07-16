@@ -1,0 +1,14 @@
+<div class="">
+  {{#gab}}
+<form class="" action="/gabs/{{_id}}" method="post">
+
+  <label for="message">Message</label>
+  <textarea name="message" rows="8" cols="80">{{message}}</textarea> <br>
+  <button type="submit" name="button">Save!</button>
+</form>
+<form class="" action="/gabs/{{_id}}/delete" method="post">
+  <button type="submit" name="button">Delete Gab</button>
+</form>
+  {{/gab}}
+
+</div>
