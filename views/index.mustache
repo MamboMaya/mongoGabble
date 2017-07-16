@@ -1,1 +1,14 @@
 <h1> Hello, {{user.username}}! Welcome to Gabble!</h1>
+
+{{#gabs}}
+<div class="gab">
+  <p>{{message}}</p>
+  <small>- {{username}}</small>
+</div>
+<div class="likes">
+  <span>{{likes}}</span>
+  <form class="" action="/gabs/{{_id}}/like" method="post">
+    <button type="submit" name="button">I Like Dis</button>
+  </form>
+</div>
+{{/gabs}}

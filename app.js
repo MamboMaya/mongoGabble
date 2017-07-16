@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const MongoStore = require('connect-mongo')(session)
 const morgan = require('morgan')
+const authentication = require('./middleware/authentication')
 
 app.engine('mustache', mustache())
 app.set('view engine', 'mustache')
@@ -27,24 +28,18 @@ app.use(session(sess))
 const homepageRoute = require('./routes/homepage')
 const sessionRoutes = require('./routes/session')
 const registrationRoutes = require('./routes/registration')
+const gabsRoutes = require('./routes/gabs')
+const likesRoutes = require('./routes/likes')
 const User = require('./models/User')
+const Gab = require('./models/Gab')
 
+
+app.use(authentication)
 app.use(sessionRoutes)
 app.use(registrationRoutes)
-app.use(function(req, res, next){
-  if (req.session.userId) {
-    User.findOne({_id: req.session.userId})
-    .then(function(user){
-      req.user = user
-      next()
-    })
-  } else {
-    res.redirect('/login')
-  }
-})
 app.use(homepageRoute)
-
-
+app.use(gabsRoutes)
+app.use(likesRoutes)
 
 
 

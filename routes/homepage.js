@@ -1,10 +1,15 @@
 const express = require('express')
 const router = express.Router()
-
+const Gab = require('../models/Gab')
 
 router.get('/', function(req, res){
-  res.render('index', {
-    user: req.user
+
+  Gab.find()
+  .then(function(gabs){
+    res.render('index', {
+      user: req.user,
+      gabs: gabs
+    })
   })
 })
 

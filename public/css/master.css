@@ -2,3 +2,8 @@ body {
   background: darkgrey;
   color: white;
 }
+header {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
