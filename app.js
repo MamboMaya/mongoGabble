@@ -34,9 +34,9 @@ const User = require('./models/User')
 const Gab = require('./models/Gab')
 
 
-app.use(authentication)
 app.use(sessionRoutes)
 app.use(registrationRoutes)
+app.use(authentication)
 app.use(homepageRoute)
 app.use(gabsRoutes)
 app.use(likesRoutes)

@@ -2,8 +2,22 @@ const express = require('express')
 const router = express.Router()
 const Gab = require('../models/Gab')
 
+function fetchGab(req, res, next){
+  Gab.findOne({_id: req.params.id, username: req.user.username})
+  .then(function(gab){
+    if (gab) {
+      req.gab = gab
+      next()
+    } else {
+      res.status(401).send('UNAUTHORIZED')
+    }
+  })
+}
+
 router.get('/gabs/new', function(req, res){
-  res.render('gabs/new')
+  res.render('gabs/new', {
+    user: req.user
+  })
 })
 
 router.post('/gabs', function(req, res){
@@ -15,30 +29,35 @@ router.post('/gabs', function(req, res){
     res.redirect('/')
   })
   .catch(function(err){
-    res.redirect('/gabs/new', {
+    res.render('gabs/new', {
       err: err,
       gab: gab
     })
   })
 })
 
-router.get('/gabs/:id/edit', function(req, res){
-  Gab.findOne({_id: req.params.id})
-  .then(function(gab){
-
+router.get('/gabs/:id/edit', fetchGab, function(req, res){
   res.render('gabs/edit', {
     user: req.user,
-    gab: gab
+    gab: req.gab
   })
-})
 })
 
-router.post('/gabs/:id', function(req, res){
+router.get('/gabs/:id/likes', function(req, res){
   Gab.findOne({_id: req.params.id})
   .then(function(gab){
-    gab.message = req.body.message
-    gab.save()
+    console.log(gab)
+    res.render('gabs/gabLikes', {
+      user: req.user,
+      gab: gab
+    })
   })
+})
+
+router.post('/gabs/:id', fetchGab, function(req, res){
+  const gab = req.gab
+  gab.message = req.body.message
+  gab.save()
   .then(function(gab){
     res.redirect('/')
   })
@@ -51,13 +70,13 @@ router.post('/gabs/:id', function(req, res){
   })
 })
 
-router.post('/gabs/:id/delete', function(req, res){
-  Gab.deleteOne({_id: req.params.id})
+router.post('/gabs/:id/delete', fetchGab, function(req, res){
+  req.gab.remove()
   .then(function(){
     res.redirect('/')
   })
   .catch(function(){
-    res.status(422)
+    res.status(422).send('COULD NOT DELETE!')
   })
 })
 

@@ -1,13 +1,14 @@
+{{#err}}
 <form class="" action="/register" method="post">
-  
-  <label for="username">Username</label>
-  <input type="text" name="username" value="{{user.username}}">
+
+  <label for="username">Username</label><br>
+  <input type="text" name="username" value="{{user.username}}">{{err.errors.username.message}}
 <br>
-  <label for="password">Password</label>
-  <input type="text" name="password" value="">
+  <label for="password">Password</label><br>
+  <input type="password" name="password" value="">{{err.errors.password.message}}
 <br>
   <input type="submit" name="" value="Register">
 
 </form>
-
+{{/err}}
 <h3>If you already have an account, feel free to login <a href="/login">here</a>.</h3>

@@ -17,7 +17,7 @@ router.post('/register', function(req, res){
   })
   .catch(function(err){
     console.log(err)
-    res.render('/registration/new', {
+    res.render('registration/new', {
       user: user,
       err: err
     })

@@ -7,3 +7,7 @@ header {
   flex-flow: row;
   justify-content: space-between;
 }
+.gab {
+  padding: 20px;
+  border-bottom: 1px solid black;
+}
